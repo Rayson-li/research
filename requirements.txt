@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 pandas==2.1.4
 rdkit==2024.9.5
 PuLP==3.3.0
+=======
+pandas==2.1.4
+rdkit==2024.9.5
+PuLP==3.3.0
+>>>>>>> 83f1a6531457c364dc623c3bdf6dfb15dcb7f783
 jupyter
