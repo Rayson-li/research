@@ -511,7 +511,7 @@ def MechFind(desired_reaction,radius,max_steps,iterations,time_limit):
     
     sorted_solutions = []
     for idx in sorted_scores:
-        sorted_solutions.append(solutions[idx])
+        sorted_solutions.append((solutions[idx], round(sorted_scores[idx], 3)))
         
     elapsed_time = time.time() - start_time
     print('Final time: '+ str(round(elapsed_time))+' seconds')
@@ -528,7 +528,7 @@ def MechFind(desired_reaction,radius,max_steps,iterations,time_limit):
 
 
 import pandas as pd
-from MechFind import MechFind
+
 
 
 df = pd.read_csv("processed_reactions.csv")
@@ -536,7 +536,6 @@ df = pd.read_csv("processed_reactions.csv")
 
 desired_reaction = df.loc[123456, "unmapped"]
 
-print("正在运行第一条 unmapped 反应：")
 print(desired_reaction)
 
 radius = 1
@@ -552,16 +551,15 @@ solutions = MechFind(
     time_limit
 )
 
-print("\n机制结果：")
+print("\n")
 print(solutions)
 
-# 如果成功，生成机制矩阵
 if isinstance(solutions, list) and isinstance(solutions[0], list):
     M = Mechanism_Matrix(solutions[0], desired_reaction, radius)
     print("\nMechanism Matrix:")
     print(M)
 else:
-    print("\n无法生成 Mechanism_Matrix，因为 solver 没有返回有效机制。")
+    print("\nempty")
 
 
 

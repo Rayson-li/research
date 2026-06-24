@@ -517,7 +517,11 @@ def MechFind(desired_reaction,radius,max_steps,iterations,time_limit):
     print('Final time: '+ str(round(elapsed_time))+' seconds')
     print('Number of solutions from minRules: '+ str(sol_num))
 
-    return sorted_solutions
+    best_idx = list(sorted_scores.keys())[0]
+    best_score = sorted_scores[best_idx]
+
+    return sorted_solutions, best_score
+
 
 
 
@@ -536,22 +540,52 @@ max_steps = 20
 iterations = 10
 time_limit = 120
 
-for idx in range(len(df)):
+best_scores = []
+
+for idx in range(123450, 123461):
     desired_reaction = df.loc[idx, "unmapped"]
 
     print(f"\n==============================")
     print(f"{idx} ")
     print(desired_reaction)
 
-    solutions = MechFind(
+    solutions, best_score = MechFind(
         desired_reaction,
         radius,
         max_steps,
         iterations,
         time_limit
     )
-    print(f"\n")
-    print(solutions)
+
+    print("\nBest score:", best_score)
+    best_scores.append(best_score)
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from collections import Counter
+import numpy as np
+
+
+rounded = [round(s, 3) for s in best_scores]
+
+freq = Counter(rounded)
+
+x = np.arange(-0.1, 1.1, 0.01)
+x = [round(v, 2) for v in x]   
+
+y = [freq.get(round(v, 3), 0) for v in x]
+
+plt.plot(x, y, marker='o')
+plt.xlabel("Best Score ")
+plt.ylabel("Frequency")
+plt.title("Frequency of Best Scores")
+plt.xticks(rotation=90)
+
+plt.savefig("best_score_line_fixed.png", dpi=300, bbox_inches='tight')
+
+
+
 
 
 
