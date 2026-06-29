@@ -533,7 +533,7 @@ def MechFind(desired_reaction,radius,max_steps,iterations,time_limit):
 
 import pandas as pd
 
-df = pd.read_csv("processed_reactions.csv")
+df = pd.read_csv("unique_reactions_with_uniprot_ec.csv")
 
 radius = 1
 max_steps = 20
@@ -542,7 +542,7 @@ time_limit = 120
 
 best_scores = []
 
-for idx in range(123450,123461):
+for idx in range(1001):
     desired_reaction = df.loc[idx, "unmapped"]
 
     print(f"\n==============================")
@@ -576,13 +576,13 @@ x = [round(v, 2) for v in x]
 
 y = [freq.get(round(v, 3), 0) for v in x]
 
-plt.plot(x, y, marker='o')
+plt.plot(x, y)
 plt.xlabel("Best Score ")
 plt.ylabel("Frequency")
 plt.title("Frequency of Best Scores")
 plt.xticks(rotation=90)
 
-plt.savefig("best_score_line_fixed123456.png", dpi=300, bbox_inches='tight')
+plt.savefig("best_score_line_fixed.png", dpi=300, bbox_inches='tight')
 
 
 
